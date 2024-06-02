@@ -34,49 +34,31 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import TutorialDataService from '@/services/TutorialDataService'
 import Tutorial from '@/types/Tutorial'
 import ResponseData from '@/types/ResponseData'
 
-export default defineComponent({
-  name: 'add-tutorial',
-  data() {
-    return {
-      tutorial: {
-        id: null,
-        title: '',
-        description: '',
-        published: false
-      } as Tutorial,
-      submitted: false
-    }
-  },
-  methods: {
-    saveTutorial() {
-      let data = {
-        title: this.tutorial.title,
-        description: this.tutorial.description
-      }
+const tutorial = ref<Tutorial>({} as Tutorial)
+const submitted = ref<boolean>(false)
 
-      TutorialDataService.create(data)
-        .then((response: ResponseData) => {
-          this.tutorial.id = response.data.id
-          console.log(response.data)
-          this.submitted = true
-        })
-        .catch((e: Error) => {
-          console.log(e)
-        })
-    },
+const saveTutorial = () => {
+  TutorialDataService.create(tutorial.value)
+    .then((response: ResponseData) => {
+      tutorial.value.id = response.data.id
+      console.log(response.data)
+      submitted.value = true
+    })
+    .catch((e: Error) => {
+      console.log(e)
+    })
+}
 
-    newTutorial() {
-      this.submitted = false
-      this.tutorial = {} as Tutorial
-    }
-  }
-})
+const newTutorial = () => {
+  submitted.value = false
+  tutorial.value = {} as Tutorial
+}
 </script>
 
 <style>

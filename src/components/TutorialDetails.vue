@@ -8,7 +8,12 @@
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" v-model="currentTutorial.description" />
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          v-model="currentTutorial.description"
+        />
       </div>
 
       <div class="form-group">
@@ -17,7 +22,11 @@
       </div>
     </form>
 
-    <button class="btn btn-primary mr-2" v-if="currentTutorial.published" @click="updatePublished(false)">
+    <button
+      class="btn btn-primary mr-2"
+      v-if="currentTutorial.published"
+      @click="updatePublished(false)"
+    >
       UnPublish
     </button>
     <button v-else class="btn btn-primary mr-2" @click="updatePublished(true)">Publish</button>
